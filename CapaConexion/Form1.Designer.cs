@@ -55,9 +55,9 @@
             // 
             // filtrotxt
             // 
-            this.filtrotxt.Location = new System.Drawing.Point(325, 32);
+            this.filtrotxt.Location = new System.Drawing.Point(328, 33);
             this.filtrotxt.Name = "filtrotxt";
-            this.filtrotxt.Size = new System.Drawing.Size(177, 20);
+            this.filtrotxt.Size = new System.Drawing.Size(159, 20);
             this.filtrotxt.TabIndex = 2;
             this.filtrotxt.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
@@ -81,6 +81,7 @@
             this.Controls.Add(this.dataGrid);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

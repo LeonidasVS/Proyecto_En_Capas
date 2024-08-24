@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using CapaConexion.Modelos;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CapaConexion
 {
@@ -65,8 +66,25 @@ namespace CapaConexion
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            var filtro = customers.FindAll(f => f.CompanyName.StartsWith(filtrotxt.Text));
-            dataGrid.DataSource = filtro;
+            TextBox textBox = (TextBox)sender;
+            string text = filtrotxt.Text;
+
+            
+            if (text.Length>0)
+            {
+                string formateoTexto = char.ToUpper(text[0]) + text.Substring(1).ToLower();
+                textBox.Text = formateoTexto;
+
+                textBox.SelectionStart = textBox.Text.Length;
+
+                var filtro = customers.FindAll(f => f.CompanyName.StartsWith(filtrotxt.Text));
+                dataGrid.DataSource = filtro;
+            }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            string cadenaConexion = DatosLayer.DataBase.ConnectionString();
         }
     }
 }
