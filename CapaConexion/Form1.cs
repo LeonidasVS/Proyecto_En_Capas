@@ -23,6 +23,16 @@ namespace CapaConexion
             SqlConnection conexion = new SqlConnection("Data Source=DESKTOP-5R5EQO8\\SQLEXPRESS;Initial Catalog=Northwind;Integrated Security=True;");
             conexion.Open();
             MessageBox.Show("Conectado");
+
+            string selectFrom = "SELECT * FROM [dbo].[Customers]";
+            SqlCommand comando = new SqlCommand(selectFrom,conexion);
+            SqlDataReader reader = comando.ExecuteReader();
+
+            while (reader.Read())
+            {
+                var customerId = reader[0];
+            }
+
             conexion.Close();
             MessageBox.Show("Gracias, Conexion finalizada");
         }
