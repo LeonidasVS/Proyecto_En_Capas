@@ -23,7 +23,7 @@ namespace CapaConexion
 
         private void btnCargar_Click(object sender, EventArgs e)
         {
-            var custoMers = customeReposity.obtenerTodos();
+            var custoMers = customeReposity.ObtenerTodos();
             dataGrid.DataSource = custoMers;
         }
 
@@ -47,11 +47,22 @@ namespace CapaConexion
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            DatosLayer.DataBase.ApplicationName = "Programacion 2 ejemplo";
-            DatosLayer.DataBase.ConnetionTimeout = 30;
-            string cadenaConexion = DatosLayer.DataBase.ConnectionString;
+            //DatosLayer.DataBase.ApplicationName = "Programacion 2 ejemplo";
+            //DatosLayer.DataBase.ConnetionTimeout = 30;
+            //string cadenaConexion = DatosLayer.DataBase.ConnectionString;
 
-            var conectarDB = DatosLayer.DataBase.GetSqlConnection();
+            //var conectarDB = DatosLayer.DataBase.GetSqlConnection();
+        }
+
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+
+            var cliente = customeReposity.ObtenerPorID(textBuscar.Text);
+            if (cliente != null)
+            {
+                textBuscar.Text = cliente.CompanyName;
+                MessageBox.Show(cliente.CompanyName);
+            }
         }
     }
 }

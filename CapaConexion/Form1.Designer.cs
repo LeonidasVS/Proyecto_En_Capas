@@ -32,20 +32,23 @@
             this.btnCargar = new System.Windows.Forms.Button();
             this.filtrotxt = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBuscar = new System.Windows.Forms.TextBox();
+            this.btnBuscar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGrid
             // 
             this.dataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGrid.Location = new System.Drawing.Point(24, 78);
+            this.dataGrid.Location = new System.Drawing.Point(12, 121);
             this.dataGrid.Name = "dataGrid";
-            this.dataGrid.Size = new System.Drawing.Size(752, 293);
+            this.dataGrid.Size = new System.Drawing.Size(638, 218);
             this.dataGrid.TabIndex = 0;
             // 
             // btnCargar
             // 
-            this.btnCargar.Location = new System.Drawing.Point(346, 399);
+            this.btnCargar.Location = new System.Drawing.Point(128, 376);
             this.btnCargar.Name = "btnCargar";
             this.btnCargar.Size = new System.Drawing.Size(111, 39);
             this.btnCargar.TabIndex = 1;
@@ -55,7 +58,7 @@
             // 
             // filtrotxt
             // 
-            this.filtrotxt.Location = new System.Drawing.Point(328, 33);
+            this.filtrotxt.Location = new System.Drawing.Point(80, 51);
             this.filtrotxt.Name = "filtrotxt";
             this.filtrotxt.Size = new System.Drawing.Size(159, 20);
             this.filtrotxt.TabIndex = 2;
@@ -64,17 +67,46 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(284, 35);
+            this.label1.Location = new System.Drawing.Point(34, 54);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(40, 13);
             this.label1.TabIndex = 3;
             this.label1.Text = "Buscar";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(743, 157);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(65, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Customer ID";
+            // 
+            // textBuscar
+            // 
+            this.textBuscar.Location = new System.Drawing.Point(697, 188);
+            this.textBuscar.Name = "textBuscar";
+            this.textBuscar.Size = new System.Drawing.Size(159, 20);
+            this.textBuscar.TabIndex = 4;
+            // 
+            // btnBuscar
+            // 
+            this.btnBuscar.Location = new System.Drawing.Point(721, 241);
+            this.btnBuscar.Name = "btnBuscar";
+            this.btnBuscar.Size = new System.Drawing.Size(111, 39);
+            this.btnBuscar.TabIndex = 6;
+            this.btnBuscar.Text = "Buscar Cliente";
+            this.btnBuscar.UseVisualStyleBackColor = true;
+            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(901, 450);
+            this.Controls.Add(this.btnBuscar);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.textBuscar);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.filtrotxt);
             this.Controls.Add(this.btnCargar);
@@ -94,6 +126,9 @@
         private System.Windows.Forms.Button btnCargar;
         private System.Windows.Forms.TextBox filtrotxt;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox textBuscar;
+        private System.Windows.Forms.Button btnBuscar;
     }
 }
 

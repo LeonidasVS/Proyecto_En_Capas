@@ -9,13 +9,14 @@ namespace DatosLayer
 {
     public class CustomerReposity
     {
-        List<Customers> customers = new List<Customers>();
-        public List<Customers> obtenerTodos()
+
+        public List<Customers> ObtenerTodos()
         {
             using (var conexion = DataBase.GetSqlConnection())
             {
                 String selectFrom = "";
-                selectFrom = selectFrom + "SELECT [CompanyName] " + "\n";
+                selectFrom = selectFrom + "SELECT " + "\n";
+                selectFrom = selectFrom + "      [CompanyName] " + "\n";
                 selectFrom = selectFrom + "      ,[ContactName] " + "\n";
                 selectFrom = selectFrom + "      ,[ContactTitle] " + "\n";
                 selectFrom = selectFrom + "      ,[Address] " + "\n";
@@ -30,27 +31,68 @@ namespace DatosLayer
                 using (SqlCommand comando = new SqlCommand(selectFrom, conexion))
                 {
                     SqlDataReader reader = comando.ExecuteReader();
+                    List<Customers> Customers = new List<Customers>();
 
                     while (reader.Read())
                     {
-                        Customers customer = new Customers();
-                        customer.CompanyName = reader["CompanyName"] == DBNull.Value ? "" : (String)reader["CompanyName"];
-                        customer.ContactName = reader["ContactName"] == DBNull.Value ? "" : (String)reader["ContactName"];
-                        customer.ContactTitle = reader["ContactTitle"] == DBNull.Value ? "" : (String)reader["ContactTitle"];
-                        customer.Address = reader["Address"] == DBNull.Value ? "" : (String)reader["Address"];
-                        customer.City = reader["City"] == DBNull.Value ? "" : (String)reader["City"];
-                        customer.Region = reader["Region"] == DBNull.Value ? "" : (String)reader["Region"];
-                        customer.PostalCode = reader["PostalCode"] == DBNull.Value ? "" : (string)reader["PostalCode"];
-                        customer.Country = reader["Country"] == DBNull.Value ? "" : (String)reader["Country"];
-                        customer.Phone = reader["Phone"] == DBNull.Value ? "" : (String)reader["Phone"];
-                        customer.Fax = reader["Fax"] == DBNull.Value ? "" : (String)reader["Fax"];
-
-                        customers.Add(customer);
+                        var customers = LeerDelDataReader(reader);
+                        Customers.Add(customers);
                     }
+                    return Customers;
                 }
-                conexion.Close();
             }
+        }
+        public Customers ObtenerPorID(string id)
+        {
+
+            using (var conexion = DataBase.GetSqlConnection())
+            {
+
+                String selectForID = "";
+                selectForID = selectForID + "SELECT [CustomerID] " + "\n";
+                selectForID = selectForID + "      ,[CompanyName] " + "\n";
+                selectForID = selectForID + "      ,[ContactName] " + "\n";
+                selectForID = selectForID + "      ,[ContactTitle] " + "\n";
+                selectForID = selectForID + "      ,[Address] " + "\n";
+                selectForID = selectForID + "      ,[City] " + "\n";
+                selectForID = selectForID + "      ,[Region] " + "\n";
+                selectForID = selectForID + "      ,[PostalCode] " + "\n";
+                selectForID = selectForID + "      ,[Country] " + "\n";
+                selectForID = selectForID + "      ,[Phone] " + "\n";
+                selectForID = selectForID + "      ,[Fax] " + "\n";
+                selectForID = selectForID + "  FROM [dbo].[Customers] " + "\n";
+                selectForID = selectForID + $"  Where CustomerID = '{id}'";
+
+                using (SqlCommand comando = new SqlCommand(selectForID, conexion))
+                {
+                    var reader = comando.ExecuteReader();
+                    Customers customers = null;
+                    //validadmos 
+                    if (reader.Read())
+                    {
+                        customers = LeerDelDataReader(reader);
+                    }
+                    return customers;
+                }
+            }
+        }
+
+        public Customers LeerDelDataReader(SqlDataReader reader)
+        {
+
+            Customers customers = new Customers();
+            customers.CompanyName = reader["CompanyName"] == DBNull.Value ? "" : (String)reader["CompanyName"];
+            customers.ContactName = reader["ContactName"] == DBNull.Value ? "" : (String)reader["ContactName"];
+            customers.ContactTitle = reader["ContactTitle"] == DBNull.Value ? "" : (String)reader["ContactTitle"];
+            customers.Address = reader["Address"] == DBNull.Value ? "" : (String)reader["Address"];
+            customers.City = reader["City"] == DBNull.Value ? "" : (String)reader["City"];
+            customers.Region = reader["Region"] == DBNull.Value ? "" : (String)reader["Region"];
+            customers.PostalCode = reader["PostalCode"] == DBNull.Value ? "" : (String)reader["PostalCode"];
+            customers.Country = reader["Country"] == DBNull.Value ? "" : (String)reader["Country"];
+            customers.Phone = reader["Phone"] == DBNull.Value ? "" : (String)reader["Phone"];
+            customers.Fax = reader["Fax"] == DBNull.Value ? "" : (String)reader["Fax"];
             return customers;
         }
+
     }
 }
