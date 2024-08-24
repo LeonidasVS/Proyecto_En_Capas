@@ -8,11 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using CapaConexion.Modelos;
 
 namespace CapaConexion
 {
     public partial class Form1 : Form
     {
+
         public Form1()
         {
             InitializeComponent();
@@ -40,9 +42,23 @@ namespace CapaConexion
             SqlCommand comando = new SqlCommand(selectFrom,conexion);
             SqlDataReader reader = comando.ExecuteReader();
 
+            List<Customers> customers = new List<Customers>();
+
             while (reader.Read())
             {
-                var customerId = reader[0];
+                Customers customer = new Customers();
+                customer.CompanyName = reader["CompanyName"] == DBNull.Value ? "" : (String)reader["CompanyName"];
+                customer.ContactName = reader["ContactName"] == DBNull.Value ? "" : (String)reader["ContactName"];
+                customer.ContactTitle = reader["ContactTitle"] == DBNull.Value ? "" : (String)reader["ContactTitle"];
+                customer.Address = reader["Address"] == DBNull.Value ? "" : (String)reader["Address"];
+                customer.City = reader["City"] == DBNull.Value ? "" : (String)reader["City"];
+                customer.Region = reader["Region"] == DBNull.Value ? "" : (String)reader["Region"];
+                customer.PostalCode = reader["PostalCode"] == DBNull.Value ? "" : (string)reader["PostalCode"];
+                customer.Country = reader["Country"] == DBNull.Value ? "" : (String)reader["Country"];
+                customer.Phone = reader["Phone"] == DBNull.Value ? "" : (String)reader["Phone"];
+                customer.Fax = reader["Fax"] == DBNull.Value ? "" : (String)reader["Fax"];
+
+                customers.Add(customer);
             }
 
             conexion.Close();
