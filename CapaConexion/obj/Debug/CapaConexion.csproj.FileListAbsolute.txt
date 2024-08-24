@@ -8,3 +8,6 @@ C:\Users\USUARIO\OneDrive\Documentos\Guias-Ejercicios-PrograII\CapaConexion\Capa
 C:\Users\USUARIO\OneDrive\Documentos\Guias-Ejercicios-PrograII\CapaConexion\CapaConexion\bin\Debug\CapaConexion.pdb
 C:\Users\USUARIO\OneDrive\Documentos\Guias-Ejercicios-PrograII\CapaConexion\CapaConexion\obj\Debug\CapaConexion.exe
 C:\Users\USUARIO\OneDrive\Documentos\Guias-Ejercicios-PrograII\CapaConexion\CapaConexion\obj\Debug\CapaConexion.pdb
+C:\Users\USUARIO\OneDrive\Documentos\Guias-Ejercicios-PrograII\CapaConexion\CapaConexion\bin\Debug\DatosLayer.dll
+C:\Users\USUARIO\OneDrive\Documentos\Guias-Ejercicios-PrograII\CapaConexion\CapaConexion\bin\Debug\DatosLayer.pdb
+C:\Users\USUARIO\OneDrive\Documentos\Guias-Ejercicios-PrograII\CapaConexion\CapaConexion\obj\Debug\CapaCone.C1BD2A79.Up2Date
