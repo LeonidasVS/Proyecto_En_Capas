@@ -119,16 +119,44 @@ namespace DatosLayer
 
                 using (var comando=new SqlCommand(insertInto,conexion)){
 
-                    comando.Parameters.AddWithValue("CustomerID", customer.CustomerID);
-                    comando.Parameters.AddWithValue("CompanyName", customer.CompanyName);
-                    comando.Parameters.AddWithValue("ContactName", customer.ContactName);
-                    comando.Parameters.AddWithValue("ContactTitle", customer.ContactName);
-                    comando.Parameters.AddWithValue("Address", customer.Address);
-                    comando.Parameters.AddWithValue("City", customer.City);
-                    var insertados = comando.ExecuteNonQuery();
+                    int insertados = parametrosCliente(customer, comando);
                     return insertados;
                 }
             }
+        }
+
+        public int ActualizarCliente(Customers customer)
+        {
+            using (var conexion=DataBase.GetSqlConnection())
+            {
+                String updateCustomers = "";
+                updateCustomers = updateCustomers + "UPDATE [dbo].[Customers] " + "\n";
+                updateCustomers = updateCustomers + "   SET [CustomerID] = @CustomerID " + "\n";
+                updateCustomers = updateCustomers + "      ,[CompanyName] = @CompanyName " + "\n";
+                updateCustomers = updateCustomers + "      ,[ContactName] = @ContactName " + "\n";
+                updateCustomers = updateCustomers + "      ,[ContactTitle] = @ContactTitle " + "\n";
+                updateCustomers = updateCustomers + "      ,[Address] = @Address " + "\n";
+                updateCustomers = updateCustomers + "      ,[City] = @City " + "\n";
+                updateCustomers = updateCustomers + " WHERE CustomerID= @CustomerID";
+
+                using (var comando=new SqlCommand(updateCustomers,conexion))
+                {
+                    int insertados = parametrosCliente(customer, comando);
+                    return insertados;
+                }
+            }
+        }
+
+        public int parametrosCliente(Customers customer, SqlCommand comando)
+        {
+            comando.Parameters.AddWithValue("CustomerID", customer.CustomerID);
+            comando.Parameters.AddWithValue("CompanyName", customer.CompanyName);
+            comando.Parameters.AddWithValue("ContactName", customer.ContactName);
+            comando.Parameters.AddWithValue("ContactTitle", customer.ContactName);
+            comando.Parameters.AddWithValue("Address", customer.Address);
+            comando.Parameters.AddWithValue("City", customer.City);
+            var insertados = comando.ExecuteNonQuery();
+            return insertados;
         }
     }
 }

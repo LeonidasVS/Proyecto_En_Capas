@@ -20,6 +20,7 @@ namespace CapaConexion
         public Form1()
         {
             InitializeComponent();
+            btnModificar.Enabled= false;
         }
 
         private void btnCargar_Click(object sender, EventArgs e)
@@ -46,28 +47,26 @@ namespace CapaConexion
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-
             var cliente = customeReposity.ObtenerPorID(textBuscar.Text);
-            if (cliente != null)
+            if (cliente!=null)
             {
-                textBuscar.Text = cliente.CompanyName;
-                MessageBox.Show(cliente.CompanyName);
+                txtCustomerID.Text = cliente.CustomerID;
+                txtCompanyName.Text = cliente.CompanyName;
+                txtContactName.Text = cliente.ContactName;
+                txtContactTitle.Text = cliente.ContactTitle;
+                txtAddress.Text = cliente.Address;
+                txtCity.Text = cliente.City;
+                txtCustomerID.Enabled = false;
+                btnIngresar.Enabled = false;
+                btnModificar.Enabled = true;
             }
         }
 
         private void btnIngresar_Click(object sender, EventArgs e)
         {
-            var nuevoCliente = new Customers
-            {
-                CustomerID=txtCustomerID.Text,
-                CompanyName=txtCompanyName.Text,
-                ContactName= txtContactName.Text,
-                ContactTitle=txtContactTitle.Text,
-                Address=txtAddress.Text,
-                City=txtCity.Text
-            };
+  
             var resultado = 0;
-
+            var nuevoCliente = ObtenerNUevoCLiente();
             if (validarCampoNull(nuevoCliente) == false)
             {
                 resultado = customeReposity.InsertarCliente(nuevoCliente);
@@ -101,6 +100,43 @@ namespace CapaConexion
                 }
             }
             return false;
+        }
+
+        private void clear_Click(object sender, EventArgs e)
+        {
+            txtCustomerID.Text = "";
+            txtCompanyName.Text = "";
+            txtContactName.Text = "";
+            txtCity.Text = "";
+            txtAddress.Text = "";
+            txtContactTitle.Text = "";
+            txtCustomerID.Enabled = true;
+            btnIngresar.Enabled = true;
+            textBuscar.Text = "";
+            btnModificar.Enabled = false;
+        }
+
+        private void btnModificar_Click(object sender, EventArgs e)
+        {
+
+            var actualizarCliente = ObtenerNUevoCLiente();
+            int actualizadas=customeReposity.ActualizarCliente(actualizarCliente);
+            MessageBox.Show($"Filas actualizadas = {actualizadas}");
+            
+        }
+
+        private Customers ObtenerNUevoCLiente()
+        {
+            var nuevoCliente = new Customers
+            {
+                CustomerID = txtCustomerID.Text,
+                CompanyName = txtCompanyName.Text,
+                ContactName = txtContactName.Text,
+                ContactTitle = txtContactTitle.Text,
+                Address = txtAddress.Text,
+                City = txtCity.Text
+            };
+            return nuevoCliente;
         }
     }
 }
