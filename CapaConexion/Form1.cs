@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using static System.Net.Mime.MediaTypeNames;
 using DatosLayer;
+using System.Reflection;
 
 namespace CapaConexion
 {
@@ -29,20 +30,9 @@ namespace CapaConexion
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            //TextBox textBox = (TextBox)sender;
-            //string text = filtrotxt.Text;
-
-            
-            //if (text.Length>0)
-            //{
-            //    string formateoTexto = char.ToUpper(text[0]) + text.Substring(1).ToLower();
-            //    textBox.Text = formateoTexto;
-
-            //    textBox.SelectionStart = textBox.Text.Length;
-
-            //    var filtro = customers.FindAll(f => f.CompanyName.StartsWith(filtrotxt.Text));
-            //    dataGrid.DataSource = filtro;
-            //}
+            var ObtenerTodo = customeReposity.ObtenerTodos();
+            var filtro = ObtenerTodo.FindAll(f => f.CustomerID.StartsWith(filtrotxt.Text));
+            dataGrid.DataSource = filtro;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -63,6 +53,54 @@ namespace CapaConexion
                 textBuscar.Text = cliente.CompanyName;
                 MessageBox.Show(cliente.CompanyName);
             }
+        }
+
+        private void btnIngresar_Click(object sender, EventArgs e)
+        {
+            var nuevoCliente = new Customers
+            {
+                CustomerID=txtCustomerID.Text,
+                CompanyName=txtCompanyName.Text,
+                ContactName= txtContactName.Text,
+                ContactTitle=txtContactTitle.Text,
+                Address=txtAddress.Text,
+                City=txtCity.Text
+            };
+            var resultado = 0;
+
+            if (validarCampoNull(nuevoCliente) == false)
+            {
+                resultado = customeReposity.InsertarCliente(nuevoCliente);
+
+                if (resultado>0)
+                {
+                    MessageBox.Show("Cliente insertado con EXITO", "Insercion de clientes",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    txtCustomerID.Text = "";
+                    txtCompanyName.Text = "";
+                    txtContactName.Text = "";
+                    txtCity.Text = "";
+                    txtAddress.Text = "";
+                    txtContactTitle.Text = "";
+                }
+            }
+            else
+            {
+                MessageBox.Show("Debe completar todos los campos por favor","",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+            }
+
+        }
+
+        public Boolean validarCampoNull(Object objeto)
+        {
+            foreach (PropertyInfo property in objeto.GetType().GetProperties())
+            {
+                object value = property.GetValue(objeto, null);
+                if ((string)value == "")
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
