@@ -141,6 +141,7 @@ namespace DatosLayer
                 {
                     int insertados = parametrosCliente(customer, comando);
                     return insertados;
+
                 }
             }
         }
