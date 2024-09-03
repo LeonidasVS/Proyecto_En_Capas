@@ -9,7 +9,6 @@ namespace DatosLayer
 {
     public class CustomerReposity
     {
-
         public List<Customers> ObtenerTodos()
         {
             using (var conexion = DataBase.GetSqlConnection())
@@ -81,7 +80,6 @@ namespace DatosLayer
 
         public Customers LeerDelDataReader(SqlDataReader reader)
         {
-
             Customers customers = new Customers();
             customers.CustomerID = reader["CustomerID"] == DBNull.Value ? "" : (String)reader["CustomerID"];
             customers.CompanyName = reader["CompanyName"] == DBNull.Value ? "" : (String)reader["CompanyName"];
@@ -146,13 +144,28 @@ namespace DatosLayer
                 }
             }
         }
+        public int EliminarCliente(string id)
+        {
+            using (var conexion = DataBase.GetSqlConnection())
+            {
+                String EliminarCliente = "";
+                EliminarCliente = EliminarCliente + "DELETE FROM [dbo].[Customers] " + "\n";
+                EliminarCliente = EliminarCliente + "      WHERE CustomerID = @CustomerID";
 
+                using (SqlCommand comando = new SqlCommand(EliminarCliente, conexion))
+                {
+                    comando.Parameters.AddWithValue("@CustomerID", id);
+                    int elimindos = comando.ExecuteNonQuery();
+                    return elimindos;
+                }
+            }
+        }
         public int parametrosCliente(Customers customer, SqlCommand comando)
         {
             comando.Parameters.AddWithValue("CustomerID", customer.CustomerID);
             comando.Parameters.AddWithValue("CompanyName", customer.CompanyName);
             comando.Parameters.AddWithValue("ContactName", customer.ContactName);
-            comando.Parameters.AddWithValue("ContactTitle", customer.ContactName);
+            comando.Parameters.AddWithValue("ContactTitle", customer.ContactTitle);
             comando.Parameters.AddWithValue("Address", customer.Address);
             comando.Parameters.AddWithValue("City", customer.City);
             var insertados = comando.ExecuteNonQuery();

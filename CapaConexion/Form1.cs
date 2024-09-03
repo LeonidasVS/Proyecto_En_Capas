@@ -20,15 +20,17 @@ namespace CapaConexion
         public Form1()
         {
             InitializeComponent();
+            cargarInformacion();
             btnModificar.Enabled= false;
+            btnEliminar.Enabled= false;
+
         }
 
-        private void btnCargar_Click(object sender, EventArgs e)
+        public void cargarInformacion()
         {
             var custoMers = customeReposity.ObtenerTodos();
             dataGrid.DataSource = custoMers;
         }
-
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             var ObtenerTodo = customeReposity.ObtenerTodos();
@@ -59,6 +61,7 @@ namespace CapaConexion
                 txtCustomerID.Enabled = false;
                 btnIngresar.Enabled = false;
                 btnModificar.Enabled = true;
+                btnEliminar.Enabled = true;
             }
         }
 
@@ -74,12 +77,7 @@ namespace CapaConexion
                 if (resultado>0)
                 {
                     MessageBox.Show("Cliente insertado con EXITO", "Insercion de clientes",MessageBoxButtons.OK,MessageBoxIcon.Information);
-                    txtCustomerID.Text = "";
-                    txtCompanyName.Text = "";
-                    txtContactName.Text = "";
-                    txtCity.Text = "";
-                    txtAddress.Text = "";
-                    txtContactTitle.Text = "";
+                    Borrar();
                 }
             }
             else
@@ -102,7 +100,7 @@ namespace CapaConexion
             return false;
         }
 
-        private void clear_Click(object sender, EventArgs e)
+        public void Borrar()
         {
             txtCustomerID.Text = "";
             txtCompanyName.Text = "";
@@ -110,10 +108,17 @@ namespace CapaConexion
             txtCity.Text = "";
             txtAddress.Text = "";
             txtContactTitle.Text = "";
+            textBuscar.Text = "";
+        }
+        private void clear_Click(object sender, EventArgs e)
+        {
+            Borrar();
             txtCustomerID.Enabled = true;
             btnIngresar.Enabled = true;
             textBuscar.Text = "";
             btnModificar.Enabled = false;
+            btnEliminar.Enabled = false;
+            textBuscar.Text= "";
         }
 
         private void btnModificar_Click(object sender, EventArgs e)
@@ -122,6 +127,12 @@ namespace CapaConexion
             var actualizarCliente = ObtenerNUevoCLiente();
             int actualizadas=customeReposity.ActualizarCliente(actualizarCliente);
             MessageBox.Show($"Filas actualizadas = {actualizadas}");
+            btnModificar.Enabled = false;
+            btnEliminar.Enabled = false;
+            txtCustomerID.Enabled = true;
+            btnIngresar.Enabled = true;
+            Borrar();
+            cargarInformacion();
             
         }
 
@@ -129,14 +140,30 @@ namespace CapaConexion
         {
             var nuevoCliente = new Customers
             {
-                CustomerID = txtCustomerID.Text,
-                CompanyName = txtCompanyName.Text,
-                ContactName = txtContactName.Text,
-                ContactTitle = txtContactTitle.Text,
-                Address = txtAddress.Text,
-                City = txtCity.Text
+                CustomerID= txtCustomerID.Text,
+                CompanyName= txtCompanyName.Text,
+                ContactName= txtContactName.Text,
+                ContactTitle= txtContactTitle.Text,
+                Address= txtAddress.Text,
+                City= txtCity.Text,
             };
             return nuevoCliente;
+        }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            int eliminados = customeReposity.EliminarCliente(textBuscar.Text);
+
+            if (eliminados>0)
+            {
+                MessageBox.Show("Usuario Elimiando", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Borrar();
+                btnEliminar.Enabled = false;
+                btnModificar.Enabled = false;
+                txtCustomerID.Enabled = true;
+                btnIngresar.Enabled = true;
+                cargarInformacion();
+            }
         }
     }
 }
